@@ -25,3 +25,10 @@ class QualyFile(object):
             self.race_length = self.race_time
         else:
             self.race_length = self.race_laps
+
+        self.session_time = self.xml_file.timestring.string
+        self.fuel_consumption = self.xml_file.fuelmult.string
+        self.tire_consumption = self.xml_file.tiremult.string
+        self.drivers_on_session = len(self.xml_file.find_all("driver"))
+
+    #def print_racing_grid(self):
