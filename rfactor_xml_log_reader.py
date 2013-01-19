@@ -1,11 +1,11 @@
 #coding: utf-8
 
-from core import xml_reader
+from core.qualy_parser import QualyFile
 import sys
 
 
 def demonstration(args):
-    qualifying = xml_reader.QualyFile(args[0])
+    qualifying = QualyFile(args[0])
     print '\nQualyFile'
     print 'Circuit: {}'.format(qualifying.track_name)
     print 'Length: {}m'.format(qualifying.track_length)
