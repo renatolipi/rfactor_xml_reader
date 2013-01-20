@@ -1,6 +1,7 @@
 #coding: utf-8
 
 import sys
+from bs4 import BeautifulSoup as BS
 from core import qualy_parser
 
 APP_NAME = 'rfactor_xml_log_reader'
@@ -15,7 +16,33 @@ def print_help_text():
           """.format(APP_NAME)
 
 
+def validate_file(session, input_file):
+    #TODO: pass BS parameter instead BSing it again.
+    print 'Checking if it is a valid file... (it may take a minute)'
+    try:
+        xml_file = BS(open(input_file))
+    except IOError:
+        print "An IO error has occurred. Are you shure this file exists? Check if it is in this given path."
+        sys.exit()
+    #if qualy, check <RaceResults><Qualify>
+    if session == 'qualy':
+        content = xml_file.raceresults.qualify
+        if content:
+            return True
+        return False
+    #if race, check <RaceResults><Race>
+    if session == 'race':
+        content = xml_file.raceresults.race
+        if content:
+            return True
+        return False
+
+
 def parse_session(session, input_file, output_mode=None):
+    if not validate_file(session, input_file):
+        print 'INVALID FILE'
+        sys.exit()
+
     print 'Session: ', session
     print 'input: ', input_file
     if not output_mode:
