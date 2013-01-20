@@ -4,12 +4,14 @@ import sys
 from bs4 import BeautifulSoup as BS
 from core import qualy_parser, race_parser
 
+
 APP_NAME = 'rfactor_xml_log_reader'
+
 
 def print_help_text():
     print """\nThanks for using this program!\n
              How to call the parser:
-             python {0} [qualy/race] path/to/your/file.xml [<leave it blank>/csv/spreadsheet/html]
+             python {0} [qualy/race] path/to/your/file.xml [<leave it blank>/csv/html]
              \tor
              python {0} help
              to see this help text.\n
@@ -43,11 +45,13 @@ def parse_session(session, input_file, output_mode=None):
         print 'INVALID FILE'
         sys.exit()
 
-    print 'Session: ', session
-    print 'input: ', input_file
     if not output_mode:
         output_mode = 'raw'
-    print 'output: ', output_mode
+
+    print 'Session {0}\ninput: {1}\noutput: {2}\n'.format(
+                                                    session,
+                                                    input_file,
+                                                    output_mode)
 
     if session == 'qualy':
         qualy_parser.parse_it(input_file, output_mode)
@@ -66,7 +70,7 @@ def start_parsing(args):
 
         try:
             output_mode = args[2]
-            if output_mode not in ['csv', 'spreadsheet', 'html']:
+            if output_mode not in ['csv', 'html']:
                 print 'INVALID OUTPUT MODE'
                 print_help_text()
                 sys.exit()
