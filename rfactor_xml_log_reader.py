@@ -1,7 +1,7 @@
 #coding: utf-8
 
 import sys
-from core.qualy_parser import QualyFile
+from core import qualy_parser
 
 APP_NAME = 'rfactor_xml_log_reader'
 
@@ -15,39 +15,18 @@ def print_help_text():
           """.format(APP_NAME)
 
 
-def qualy_demo(args):
-    qualifying = QualyFile(args[0])
-    print '\nQualyFile demo:'
-    print 'Circuit: {}'.format(qualifying.track_name)
-    print 'Length: {}m'.format(qualifying.track_length)
-    print 'Laps: {}'.format(qualifying.race_laps)
-    print 'Time: {}'.format(qualifying.race_time)
-    print 'Race length: {}\n'.format(qualifying.race_length)
-    print 'Session start: {}'.format(qualifying.session_start)
-    print 'Session length: {} min'.format(qualifying.session_length)
-    print 'Fuel consumption: {}x'.format(qualifying.fuel_consumption)
-    print 'Tire consumption: {}x'.format(qualifying.tire_consumption)
-    print 'Drivers on session: {}\n\n'.format(qualifying.drivers_on_session)
-
-
-def qualy_parser(input_file, output=None):
-    print 'QUALY PARSER'
+def parse_session(session, input_file, output_mode=None):
+    print 'Session: ', session
     print 'input: ', input_file
-    if not output:
-        output = 'raw'
-    print 'output: ', output
+    if not output_mode:
+        output_mode = 'raw'
+    print 'output: ', output_mode
+
+    if session == 'qualy':
+        qualy_parser.parse_it(input_file, output_mode)
 
 
-def race_parser(input_file, output=None):
-    print 'RACE PARSER'
-    print 'input: ', input_file
-    if not output:
-        output = 'raw'
-    print 'output: ', output
-
-
-def initial(args):
-    #TODO: improve this function
+def start_parsing(args):
     print '\n'
     if args[0] in ['qualy', 'race', 'help']:
         try:
@@ -59,32 +38,27 @@ def initial(args):
 
         try:
             output_mode = args[2]
-            if output_mode not in ['', 'csv', 'spreadsheet', 'html']:
+            if output_mode not in ['csv', 'spreadsheet', 'html']:
                 print 'INVALID OUTPUT MODE'
                 print_help_text()
                 sys.exit()
         except IndexError:
             output_mode = None
 
-        if args[0] == 'qualy':
-            qualy_parser(input_file, output_mode)
-
-        if args[0] == 'race':
-            race_parser(input_file, output_mode)
-
         if args[0] == 'help':
             print_help_text()
+        else:
+            parse_session(args[0], input_file, output_mode)
     else:
         print 'INVALID PARSER INSTRUCTION'
         print_help_text()
 
 
 if __name__ == '__main__':
-    #qualy_demo(sys.argv[1:])
     try:
         sys.argv[1]
     except IndexError:
         print_help_text()
         sys.exit()
 
-    initial(sys.argv[1:])
+    start_parsing(sys.argv[1:])
