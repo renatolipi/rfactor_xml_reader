@@ -3,20 +3,22 @@
 from race_core import RaceFile
 
 
-def race_demo(input_file):
-    print 'Reading race log... (it takes a minute)'
-    race = RaceFile(input_file)
-    print '\nRaceFile demo:'
-    print 'Circuit: {}'.format(race.track_name)
-    print 'Length: {}m'.format(race.track_length)
-    print 'Laps: {}'.format(race.race_laps)
-    print 'Time: {}'.format(race.race_time)
-    print 'Race length: {}\n'.format(race.race_length)
-    print 'Session start: {}'.format(race.session_start)
-    print 'Session length: {} min'.format(race.session_length)
-    print 'Fuel consumption: {}x'.format(race.fuel_consumption)
-    print 'Tire consumption: {}x'.format(race.tire_consumption)
-    print 'Drivers on session: {}\n\n'.format(race.drivers_on_session)
+def print_basic_race_data(race):
+    basic_race_data = race.basic_race_data_list()
+    for line in basic_race_data:
+        print line
+    print '\n'
+
 
 def parse_it(input_file, output_mode):
-	race_demo(input_file)
+    print 'Parsing racing file... (It takes a minute. Or two.)\n'
+    race = RaceFile(input_file)
+
+    if output_mode == 'raw':
+        print_basic_race_data(race)
+
+    if output_mode == 'csv':
+        print 'Sorry, csv output mode not implemented yet.\n'
+
+    if output_mode == 'html':
+        print 'Sorry, html output mode not implemented yet.\n'

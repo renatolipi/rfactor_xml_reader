@@ -32,4 +32,30 @@ class RaceFile(object):
         self.tire_consumption = self.xml_file.tiremult.string
         self.drivers_on_session = len(self.xml_file.find_all("driver"))
 
-    #def print_racing_grid(self):
+    def basic_race_data_list(self):
+        basic_race_data = []
+        basic_race_data.append('Circuit: {}'.format(self.track_name))
+        basic_race_data.append('Length: {}m'.format(self.track_length))
+        basic_race_data.append('Laps: {}'.format(self.race_laps))
+        basic_race_data.append('Time: {}'.format(self.race_time))
+        basic_race_data.append('Race length: {}'.format(self.race_length))
+        basic_race_data.append('Session start: {}'.format(self.session_start))
+        basic_race_data.append('Session length: {} min'.format(self.session_length))
+        basic_race_data.append('Fuel consumption: {}x'.format(self.fuel_consumption))
+        basic_race_data.append('Tire consumption: {}x'.format(self.tire_consumption))
+        basic_race_data.append('Drivers on session: {}'.format(self.drivers_on_session))
+        return basic_race_data
+
+    def basic_race_data_dict(self):
+        basic_race_data = {}
+        basic_race_data['Circuit'] = self.track_name
+        basic_race_data['Circuit length'] = self.track_length
+        basic_race_data['Laps'] = self.race_laps
+        basic_race_data['Time'] = self.race_time
+        basic_race_data['Race length'] = self.race_length
+        basic_race_data['Session start'] = self.session_start
+        basic_race_data['Session length'] = self.session_length
+        basic_race_data['Fuel consumption'] = self.fuel_consumption
+        basic_race_data['tire consumption'] = self.tire_consumption
+        basic_race_data['Drivers on session'] = self.drivers_on_session
+        return basic_race_data
