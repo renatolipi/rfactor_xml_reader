@@ -32,4 +32,30 @@ class QualyFile(object):
         self.tire_consumption = self.xml_file.tiremult.string
         self.drivers_on_session = len(self.xml_file.find_all("driver"))
 
-    #def print_racing_grid(self):
+    def basic_qualy_data_list(self):
+        basic_qualy_data = []
+        basic_qualy_data.append('Circuit: {}'.format(self.track_name))
+        basic_qualy_data.append('Length: {}m'.format(self.track_length))
+        basic_qualy_data.append('Laps: {}'.format(self.race_laps))
+        basic_qualy_data.append('Time: {}'.format(self.race_time))
+        basic_qualy_data.append('Race length: {}'.format(self.race_length))
+        basic_qualy_data.append('Session start: {}'.format(self.session_start))
+        basic_qualy_data.append('Session length: {} min'.format(self.session_length))
+        basic_qualy_data.append('Fuel consumption: {}x'.format(self.fuel_consumption))
+        basic_qualy_data.append('Tire consumption: {}x'.format(self.tire_consumption))
+        basic_qualy_data.append('Drivers on session: {}'.format(self.drivers_on_session))
+        return basic_qualy_data
+
+    def basic_qualy_data_dict(self):
+        basic_qualy_data = {}
+        basic_qualy_data['Circuit'] = self.track_name
+        basic_qualy_data['Circuit length'] = self.track_length
+        basic_qualy_data['Laps'] = self.race_laps
+        basic_qualy_data['Time'] = self.race_time
+        basic_qualy_data['Race length'] = self.race_length
+        basic_qualy_data['Session start'] = self.session_start
+        basic_qualy_data['Session length'] = self.session_length
+        basic_qualy_data['Fuel consumption'] = self.fuel_consumption
+        basic_qualy_data['tire consumption'] = self.tire_consumption
+        basic_qualy_data['Drivers on session'] = self.drivers_on_session
+        return basic_qualy_data
