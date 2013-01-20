@@ -59,3 +59,22 @@ class QualyFile(object):
         basic_qualy_data['tire consumption'] = self.tire_consumption
         basic_qualy_data['Drivers on session'] = self.drivers_on_session
         return basic_qualy_data
+    
+    def basic_grid_list(self):
+        grid_list = []
+
+        for driver in self.xml_file.find_all('driver'):
+            driver_list = []
+
+            driver_list.append(driver.position.string)
+            for nName in driver.find_all("name"):
+                driver_list.append(nName.string)
+
+            if driver.bestlaptime:
+                driver_list.append(driver.bestlaptime.string)
+            else:
+                driver_list.append("DNQ")
+
+            grid_list.append(driver_list)
+
+        return grid_list
